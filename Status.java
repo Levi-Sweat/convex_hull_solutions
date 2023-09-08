@@ -1,11 +1,11 @@
 
 public enum Status {
     
-    MARRIED("married"),
-    SINGLE("single"),
-    DIVORCED("divorced"),
-    WIDOWED("widowed"),
-    NA("na");
+    MARRIED("Married"),
+    SINGLE("Single"),
+    DIVORCED("Divorced"),
+    WIDOWED("Widowed"),
+    NA("NA");
 
 
     private String marital_status;
@@ -14,7 +14,7 @@ public enum Status {
         this.marital_status = marital_status;
     }
 
-    private String getStatus(){
+    public String getStatus(){
         return this.marital_status;
     }
 }
