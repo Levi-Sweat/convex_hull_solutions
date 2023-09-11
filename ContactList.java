@@ -22,10 +22,10 @@ public class ContactList{
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Enter filename for contact list 1> ");
+        System.out.print("Enter filename for contact list 1> ");
         String filename1 = sc.nextLine(); //name of first file
         
-        System.out.println("Enter filename for contact list 2>");
+        System.out.print("Enter filename for contact list 2>");
         String filename2 = sc.nextLine(); //name of second file
 
         ContactList cl1 = new ContactList(); //used to create first database
@@ -38,6 +38,15 @@ public class ContactList{
             System.out.println(cl2.table.toString());
         
         }
+
+        //display menu syntax (not in the right place yet)
+        System.out.println("Welcome to database display\n");
+        
+        //starts the display menu loop
+        displayMenu(cl1, cl2, sc);
+        
+        //close scanner
+        sc.close();
 
     }
 
@@ -162,5 +171,58 @@ public class ContactList{
         Table.Node node = table.new Node(wc);
         
         return node;
+    }
+
+    public static void displayMenu(ContactList cl1, ContactList cl2, Scanner sc){
+        //initialize input
+        int input = 1;
+        //while loop to keep displaying menu until user quits
+        while (input != 0){
+            //print menu
+            System.out.println("Please make a choice:");
+            String choice = "\t0) Quit\n\t1) Intersect\n\t2) Difference\n\t3) Union\n\t4) Select" +
+                "\n\t5) Remove\n\t6) Print both tables";
+            System.out.println(choice);
+            System.out.print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ");
+            input = sc.nextInt();
+            //switch statement to determine what to do based on input
+            switch(input){
+                case 0:
+                    System.out.println("Goodbye!");
+                    break;
+                case 1:
+                    System.out.println("Intersect"); //TODO
+                    break;
+                case 2:
+                    System.out.println("Difference"); //TODO
+                    break;
+                case 3:
+                    System.out.println("Union"); //TODO
+                    break;
+                case 4:
+                    System.out.println("Select"); //TODO
+                    break;
+                case 5:
+                    System.out.println("Remove"); //TODO
+                    break;
+                case 6:
+                    printBoth(cl1, cl2);
+                    break;
+                default:
+                    System.out.println("Invalid input");
+                    break;
+            }
+        }
+    }
+
+    //prints out both tables with a header
+    public static void printBoth(ContactList table1, ContactList table2){
+        System.out.println("\n===========================Contact List 1============================");
+        System.out.println(table1.table.toString());
+        System.out.println("===========================Contact List 1============================\n");
+        System.out.println("===========================Contact List 2============================");
+        System.out.println(table2.table.toString());
+        System.out.println("===========================Contact List 2============================\n");
+        
     }
 }
