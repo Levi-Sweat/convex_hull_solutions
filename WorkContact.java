@@ -15,6 +15,29 @@ public class WorkContact extends Contact{
         this.department = department;
         
     }
+    public boolean hasValue(String attribute, String value){
+        boolean result = super.hasValue(attribute, value);
+        //if the value hasn't already been found, check these fields
+        if(!result){
+            if(attribute.equals("title")){
+                if(this.title.toLowerCase().equals(value)){
+                    result = true;
+                }
+            }
+            if(attribute.equals("company")){
+                if(company.toLowerCase().equals(value)){
+                    result = true;
+                }
+            }
+            if(attribute.equals("department")){
+                if(department.toLowerCase().equals(value)){
+                    result = true;
+                }
+            }
+        }
+        return result;
+    }
+
 
     public String toString(){
         String string = "Job title: " + this.title + "\nCompany: " + this.company + 
@@ -24,6 +47,7 @@ public class WorkContact extends Contact{
 
         return string;
     }
+
 
 }
 

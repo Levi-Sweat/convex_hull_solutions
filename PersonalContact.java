@@ -25,8 +25,27 @@ public class PersonalContact extends Contact{
         }
     }
 
+    // public String getAttribute(String attribute){
+    //     String result = ""
+    //     if(attribute.equals("first")) result = super.First;
+    //     return result;
+    // }
+
+    public boolean hasValue(String attribute, String value){
+        boolean result = super.hasValue(attribute, value);
+        //if the value hasn't already been found, check this field
+        if(!result){
+            if(attribute.equals("label")){
+                if(this.label.toString().toLowerCase().equals(value)){
+                    result = true;
+                }
+            }
+        }
+        return result;
+    }
+
     public String toString(){
-        String string = "Category: " + label + "\n";
+        String string = "Category: " + this.label + "\n";
         string += super.toString();
 
 

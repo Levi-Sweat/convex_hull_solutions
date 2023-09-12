@@ -27,10 +27,28 @@ public class Table<T extends Contact> {
         
     // //Creates a new table comprised of nodes having a value for a specific attribute, created from both tables.
     // }
-    //  void remove(String attribute, String value) {
+    void remove(String attribute, String value) {
         
-    // //Removes the first node matching whose attribute matches value.
-    // }
+        Node<T> current = head.next;
+        Node<T> previous = head;
+        boolean found = false;
+
+        if(previous.data.hasValue(attribute, value)){
+            head = current;
+            found = true;
+        }
+        while(previous.hasNext() && !found){
+            
+            if(current.data.hasValue(attribute,value)){
+                previous.next = current.next;
+                found = true;
+            }else{
+                previous = current;
+                current = current.next;
+            }
+        }
+
+    }
     // Table<T> select(String attribute, String value){
         
     // //Creates a new table comprised of nodes having a value for a specific attribute. 

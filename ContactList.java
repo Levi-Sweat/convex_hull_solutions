@@ -15,6 +15,9 @@ public class ContactList{
 
     private Table table; //table that includes linked list of contacts
 
+    // private static ContactList cl1;
+    // private static ContactList cl2;
+
     /**
      * 
      * @param args
@@ -25,7 +28,7 @@ public class ContactList{
         System.out.print("Enter filename for contact list 1> ");
         String filename1 = sc.nextLine(); //name of first file
         
-        System.out.print("Enter filename for contact list 2>");
+        System.out.print("Enter filename for contact list 2> ");
         String filename2 = sc.nextLine(); //name of second file
 
         ContactList cl1 = new ContactList(); //used to create first database
@@ -203,7 +206,7 @@ public class ContactList{
                     System.out.println("Select"); //TODO
                     break;
                 case 5:
-                    System.out.println("Remove"); //TODO
+                    remove(cl1,cl2);
                     break;
                 case 6:
                     printBoth(cl1, cl2);
@@ -213,6 +216,18 @@ public class ContactList{
                     break;
             }
         }
+    }
+
+    public static void remove(ContactList cl1, ContactList cl2){
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter attribute > ");
+        String attribute = sc.nextLine().toLowerCase();
+        System.out.print("Enter value > ");
+        String value = sc.nextLine().toLowerCase();
+        cl1.table.remove(attribute,value);
+        cl2.table.remove(attribute,value);
+
     }
 
     //prints out both tables with a header
@@ -225,4 +240,6 @@ public class ContactList{
         System.out.println("===========================Contact List 2============================\n");
         
     }
+
+
 }
