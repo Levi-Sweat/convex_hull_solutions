@@ -194,7 +194,7 @@ public class ContactList{
                     System.out.println("Goodbye!");
                     break;
                 case 1:
-                    System.out.println("Intersect"); //TODO
+                    intersect(cl1, cl2);
                     break;
                 case 2:
                     System.out.println("Difference"); //TODO
@@ -218,6 +218,34 @@ public class ContactList{
         }
     }
 
+    public static void intersect(ContactList cl1, ContactList cl2){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter Group > ");
+        String group = sc.nextLine();
+        System.out.print("Enter attribute > ");
+        String attribute = sc.nextLine().toLowerCase();
+        System.out.print("Enter value > ");
+        String value = sc.nextLine().toLowerCase();
+        if(group.equals("1")){
+            String str = "===========================Contact List 1, Contact List 2" + 
+                         "============================";
+            System.out.println(str);
+            System.out.println(cl1.table.intersect(attribute, value, cl2.table));
+            System.out.println(str);
+        }
+        else if(group.equals("2")){
+            String str = "===========================Contact List 2, Contact List 1" + 
+                         "============================";
+            System.out.println(str);
+            System.out.println(cl2.table.intersect(attribute, value, cl1.table));
+            System.out.println(str);
+        }
+        else{
+            System.out.println("Invalid group");
+        }
+
+    }
+
     public static void remove(ContactList cl1, ContactList cl2){
         Scanner sc = new Scanner(System.in);
 
@@ -227,6 +255,7 @@ public class ContactList{
         String value = sc.nextLine().toLowerCase();
         cl1.table.remove(attribute,value);
         cl2.table.remove(attribute,value);
+        sc.close();
 
     }
 

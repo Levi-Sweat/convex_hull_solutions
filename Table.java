@@ -1,10 +1,12 @@
 public class Table<T extends Contact> {
     private Node head;     // First record in the table
-    private Node tail;     // Last record in the table
+    private Node tail;     // Last record in the table 
     private String title;  // Label for the table
 
     public Table(String title){
         this.title = title;
+        this.head = null;
+        this.tail = null;
     }
 
     public void setHead(Node head){
@@ -19,14 +21,57 @@ public class Table<T extends Contact> {
     // //Creates a new table comprised of nodes in this table, but not in table. 
     
     // }
-    // void insert(T data){
+
+    //Adds a new record to the end of the this table.
+    void insert(T data){
+        Node<T> newNode = new Node(data);
+        if(head == null){ //if list is empty, set head and tail to new node
+            head = newNode;
+            tail = newNode;
+        } else{ //set tail's next to new node, then update tail to the new node
+            tail.setNext(newNode);
+            tail = newNode; 
+        }   
+    }
+
+    //Creates a new table comprised of nodes having a value for a specific attribute, created from both tables.
+    Table<T> intersect(String attribute, String value, Table<T> table){
+        Table<T> result = new Table("result"); //table to return
+
+        //boolean that says if the sought value has been found already
+        boolean found = false;
+
+        Node<T> current = head;
+        if(current.data.hasValue(attribute, value)){ //check the head
+            result.insert(current.data);
+            found = true;
+        } else{
+            while(current.hasNext()){ //check rest of list
+                current = current.next;
+                if(current.data.hasValue(attribute, value)){
+                    result.insert(current.data);
+                    found = true;
+                }
+            }
+        }
+
+        if(!found){ //if the sought value hasn't been found in this table, check the other table
+            current = table.head;
+            if(current.data.hasValue(attribute, value)){ //check the head
+                result.insert(current.data);
+            } else{
+                while(current.hasNext()){ //check rest of list
+                    current = current.next;
+                    if(current.data.hasValue(attribute, value)){
+                        result.insert(current.data);
+                    }
+                }
+            }
         
-    // //Adds a new record to the end of the this table.
-    // }
-    // Table<T> intersect(String attribute, String value, Table<T> table){
-        
-    // //Creates a new table comprised of nodes having a value for a specific attribute, created from both tables.
-    // }
+        }
+        return result; //return created table to be printed
+    }
+
     void remove(String attribute, String value) {
         
         Node<T> current = head.next;
