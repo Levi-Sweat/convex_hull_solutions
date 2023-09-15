@@ -98,16 +98,21 @@ public class Table<T extends Contact> {
 
     Table<T> select(String attribute, String value) {
         Table<T> result = new Table("result"); // table to return
-
+        boolean found = false;
         Node<T> current = head;
         if (current.data.hasValue(attribute, value)) { // check the head
             result.insert(current.data);
+            found = true;
         }
-        while (current.hasNext()) { // check rest of list
+        while (current.hasNext() && !found) { // check rest of list
             current = current.next;
             if (current.data.hasValue(attribute, value)) {
                 result.insert(current.data);
+                found = true;
             }
+        }
+        if(!found){
+            System.out.println("No records found.");
         }
         return result; // return created table to be printed
     }

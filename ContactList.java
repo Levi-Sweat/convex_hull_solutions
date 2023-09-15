@@ -160,8 +160,9 @@ public class ContactList {
         // infoArray[11] department
 
         WorkContact wc = new WorkContact(infoArray[0], infoArray[1], infoArray[2],
-                infoArray[5], infoArray[6], infoArray[7],
-                Integer.parseInt(infoArray[8]), infoArray[4], infoArray[3], infoArray[9], infoArray[10], infoArray[11]);
+                    infoArray[5], infoArray[6], infoArray[7],
+                Integer.parseInt(infoArray[8]), infoArray[4], infoArray[3], infoArray[9], 
+                    infoArray[10], infoArray[11]);
 
         Table.Node node = table.new Node(wc);
 
