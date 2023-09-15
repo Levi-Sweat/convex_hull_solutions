@@ -1,6 +1,6 @@
 public class Table<T extends Contact> {
-    private Node head; // First record in the table
-    private Node tail; // Last record in the table
+    private Node<T> head; // First record in the table
+    private Node<T> tail; // Last record in the table
     private String title; // Label for the table
 
     public Table(String title) {
@@ -9,11 +9,11 @@ public class Table<T extends Contact> {
         this.tail = null;
     }
 
-    public void setHead(Node head) {
+    public void setHead(Node<T> head) {
         this.head = head;
     }
 
-    public void setTail(Node tail) {
+    public void setTail(Node<T> tail) {
         this.tail = tail;
     }
 
@@ -24,7 +24,7 @@ public class Table<T extends Contact> {
 
     // Adds a new record to the end of the this table.
     void insert(T data) {
-        Node<T> newNode = new Node(data);
+        Node<T> newNode = new Node<T>(data);
         if (head == null) { // if list is empty, set head and tail to new node
             head = newNode;
             tail = newNode;
@@ -37,7 +37,7 @@ public class Table<T extends Contact> {
     // Creates a new table comprised of nodes having a value for a specific
     // attribute, created from both tables.
     Table<T> intersect(String attribute, String value, Table<T> table) {
-        Table<T> result = new Table("result"); // table to return
+        Table<T> result = new Table<T>("result"); // table to return
 
         // boolean that says if the sought value has been found already
         boolean found = false;
@@ -97,7 +97,7 @@ public class Table<T extends Contact> {
     }
 
     Table<T> select(String attribute, String value) {
-        Table<T> result = new Table("result"); // table to return
+        Table<T> result = new Table<T>("result"); // table to return
         boolean found = false;
         Node<T> current = head;
         if (current.data.hasValue(attribute, value)) { // check the head

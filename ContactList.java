@@ -11,7 +11,7 @@ import java.util.*;
 
 public class ContactList {
 
-    private Table table; // table that includes linked list of contacts
+    private Table<Contact> table; // table that includes linked list of contacts
 
     // private static ContactList cl1;
     // private static ContactList cl2;
@@ -59,14 +59,14 @@ public class ContactList {
 
             if (contact_type.equals("P")) {
                 System.out.println("personal contact");
-                table = new Table("Personal Contacts");
+                table = new Table<Contact>("Personal Contacts");
 
                 // first contact is the head of the list
-                Table.Node current = createPersonalContact(filesc.nextLine());
+                Table<Contact>.Node<Contact> current = createPersonalContact(filesc.nextLine());
 
                 table.setHead(current);
 
-                Table.Node next;
+                Table<Contact>.Node<Contact> next;
 
                 while (filesc.hasNextLine()) { // iterate through remaining contacts
                     next = createPersonalContact(filesc.nextLine());
@@ -80,14 +80,14 @@ public class ContactList {
             } else if (contact_type.equals("W")) {
                 System.out.println("work contact");
 
-                table = new Table("Work Contacts");
+                table = new Table<Contact>("Work Contacts");
 
                 // first contact is the head of the list
-                Table.Node current = createWorkContact(filesc.nextLine());
+                Table<Contact>.Node<Contact> current = createWorkContact(filesc.nextLine());
 
                 table.setHead(current);
 
-                Table.Node next;
+                Table<Contact>.Node<Contact> next;
 
                 while (filesc.hasNextLine()) { // iterate through remaining contacts
                     next = createWorkContact(filesc.nextLine());
@@ -111,7 +111,7 @@ public class ContactList {
         return result;
     }
 
-    public Table.Node createPersonalContact(String info) {
+    public Table<Contact>.Node<Contact> createPersonalContact(String info) {
         System.out.println("INFO_> " + info);
         String[] infoArray = info.split(",");
 
@@ -128,12 +128,12 @@ public class ContactList {
                 infoArray[3], infoArray[4], infoArray[5],
                 infoArray[6], Integer.parseInt(infoArray[7]), infoArray[8]);
 
-        Table.Node node = table.new Node(pc);
+        Table<Contact>.Node<Contact> node = table.new Node<Contact>(pc);
 
         return node;
     }
 
-    public Table.Node createWorkContact(String info) {
+    public Table<Contact>.Node<Contact> createWorkContact(String info) {
         System.out.println("INFO_> " + info);
         String[] infoArray = info.split(",");
 
@@ -164,7 +164,7 @@ public class ContactList {
                 Integer.parseInt(infoArray[8]), infoArray[4], infoArray[3], infoArray[9], 
                     infoArray[10], infoArray[11]);
 
-        Table.Node node = table.new Node(wc);
+        Table<Contact>.Node<Contact> node = table.new Node<Contact>(wc);
 
         return node;
     }
