@@ -81,7 +81,6 @@ public class Contact implements ContactInterface, Cloneable{
         if(attribute.equals("email")){
             if(this.email.toLowerCase().equals(value)) result = true;
         }
-        //first last status
         if(attribute.equals("first")){
             if(this.person.getFirst().toLowerCase().equals(value)) result = true;
         }
@@ -103,7 +102,6 @@ public class Contact implements ContactInterface, Cloneable{
         if(attribute.equals("zipCode")){
             if(this.address.zipCode == Integer.parseInt(value)) result = true;
         }
-        //streetAddress, city, state, zipCode
         return result;  
     }
    
