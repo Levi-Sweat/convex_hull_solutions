@@ -71,6 +71,15 @@ public class Contact implements ContactInterface, Cloneable{
         string += "\n--------------------------------------------------------------\n";
         return string;
     }
+
+    public String getFirst(){
+        return this.person.getFirst();
+    }
+
+    public String getLast(){
+        return this.person.getLast();
+    }
+
     //Said this should be an inner class, should personal info also be an inner class
     public class Address{
         

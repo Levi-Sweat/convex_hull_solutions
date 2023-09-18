@@ -117,11 +117,56 @@ public class Table<T extends Contact> {
         return result; // return created table to be printed
     }
 
-    // Table<T> union(Table<T> table){
-
-    // //Creates a new table comprised of nodes that occur in either table(s). No
+     //Creates a new table comprised of nodes that occur in either table(s). No
     // duplicates allowed.
-    // }
+    Table<T> union(Table<T> table){
+        Table<T> result = new Table<T>("result"); // table to return
+
+        Node<T> current = head;
+        result.insert(current.data);
+        while(current.hasNext()){
+            current = current.next;
+            result.insert(current.data);
+        }
+
+        current = head; // 1ST LIST
+        Node<T> current2 = table.head; //2ND LIST
+        //checks the second list's first node with the first list's first node
+        if(!(current2.data.getFirst().equals(current.data.getFirst()) && 
+        current2.data.getLast().equals(current.data.getLast()))){
+            result.insert(current2.data);
+        }
+        //compare the second list's first node with each element in the first list
+        while(current.hasNext()){
+            current = current.next;
+            if(!(current2.data.getFirst().equals(current.data.getFirst()) && 
+            current2.data.getLast().equals(current.data.getLast()))){
+                result.insert(current2.data);
+            }
+        }
+
+        boolean addElement = true;
+
+        while(current2.hasNext()) { // check rest of list
+            current2 = current2.next;
+            current = head;
+            addElement = true;
+            while(current != null){
+
+                if((current2.data.getFirst().equals(current.data.getFirst()) && 
+                   current2.data.getLast().equals(current.data.getLast()))){
+                    addElement = false;
+                }
+                current = current.next;
+            }
+            if(addElement){
+                result.insert(current2.data);
+            }
+
+
+        }
+        return result; // return created table to be printed
+    }
 
     public String toString() {
         String string = "";

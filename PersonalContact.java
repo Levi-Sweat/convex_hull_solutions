@@ -31,6 +31,14 @@ public class PersonalContact extends Contact{
     //     return result;
     // }
 
+    public String getFirst(){
+        return super.getFirst();
+    }
+
+    public String getLast(){
+        return super.getLast();
+    }
+    
     public boolean hasValue(String attribute, String value){
         boolean result = super.hasValue(attribute, value);
         //if the value hasn't already been found, check this field

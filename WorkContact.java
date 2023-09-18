@@ -38,7 +38,14 @@ public class WorkContact extends Contact{
         return result;
     }
 
+    public String getFirst(){
+        return super.getFirst();
+    }
 
+    public String getLast(){
+        return super.getLast();
+    }
+    
     public String toString(){
         String string = "Job title: " + this.title + "\nCompany: " + this.company + 
                         "\nDepartment: " + this.department + "\n";

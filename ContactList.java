@@ -193,7 +193,7 @@ public class ContactList {
                     System.out.println("Difference"); // TODO
                     break;
                 case 3:
-                    System.out.println("Union"); // TODO
+                    union(cl1, cl2);
                     break;
                 case 4:
                     select(cl1, cl2);
@@ -210,6 +210,28 @@ public class ContactList {
             }
         }
     }
+
+    public static void union(ContactList cl1, ContactList cl2){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter Contact List > ");
+        String list = sc.nextLine();
+        if(list.equals("1")){
+            String str = "===========================Contact List 1, Contact List 2" +
+                    "============================";
+            System.out.println(str);
+            System.out.println(cl1.table.union(cl2.table));
+            System.out.println(str);
+        }else if(list.equals("2")){
+            String str = "===========================Contact List 2, Contact List 1" +
+                    "============================";
+            System.out.println(str);
+            System.out.println(cl2.table.union(cl1.table));
+            System.out.println(str);
+        }else{
+            System.out.println("Invalid contact list number");
+        }
+    }
+
 
     public static void intersect(ContactList cl1, ContactList cl2) {
         Scanner sc = new Scanner(System.in);
@@ -284,5 +306,7 @@ public class ContactList {
         System.out.println("===========================Contact List 2============================\n");
 
     }
+
+    
 
 }
