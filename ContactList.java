@@ -33,7 +33,7 @@ public class ContactList {
         cl1.createDatabase(filename1);
         cl2.createDatabase(filename2);
 
-        System.out.println("Welcome to database display");
+        System.out.println("\nWelcome to database display");
 
         // starts the display menu loop
         displayMenu(cl1, cl2, sc);
@@ -189,19 +189,19 @@ public class ContactList {
                     System.out.println("Goodbye!");
                     break;
                 case 1:
-                    intersect(cl1, cl2);
+                    doIntersect(cl1, cl2);
                     break;
                 case 2:
-                    difference(cl1, cl2);
+                    doDifference(cl1, cl2);
                     break;
                 case 3:
-                    union(cl1, cl2);
+                    doUnion(cl1, cl2);
                     break;
                 case 4:
-                    select(cl1, cl2);
+                    doSelect(cl1, cl2);
                     break;
                 case 5:
-                    remove(cl1, cl2);
+                    doRemove(cl1, cl2);
                     break;
                 case 6:
                     printBoth(cl1, cl2);
@@ -219,7 +219,7 @@ public class ContactList {
      * @param cl1 the first contact list
      * @param cl2 the second contact list
      */
-    public static void difference(ContactList cl1, ContactList cl2){
+    public static void doDifference(ContactList cl1, ContactList cl2){
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter Contact List > ");
         String list = sc.nextLine();
@@ -246,7 +246,7 @@ public class ContactList {
      * @param cl1 the first contact list
      * @param cl2 the second contact list
      */
-    public static void union(ContactList cl1, ContactList cl2){
+    public static void doUnion(ContactList cl1, ContactList cl2){
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter Contact List > ");
         String list = sc.nextLine();
@@ -273,7 +273,7 @@ public class ContactList {
      * @param cl1 the first contact list
      * @param cl2 the second contact list
      */
-    public static void intersect(ContactList cl1, ContactList cl2) {
+    public static void doIntersect(ContactList cl1, ContactList cl2) {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter Group > ");
         String group = sc.nextLine();
@@ -304,7 +304,7 @@ public class ContactList {
      * @param cl1 the first contact list
      * @param cl2 the second contact list
      */
-    public static void remove(ContactList cl1, ContactList cl2) {
+    public static void doRemove(ContactList cl1, ContactList cl2) {
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Enter attribute > ");
@@ -321,15 +321,15 @@ public class ContactList {
      * @param cl1 the first contact list
      * @param cl2 the second contact list
      */
-    public static void select(ContactList cl1, ContactList cl2) {
-        Scanner selectScan = new Scanner(System.in);
+    public static void doSelect(ContactList cl1, ContactList cl2) {
+        Scanner sc = new Scanner(System.in);
 
         System.out.print("Enter table (1/2) > ");
-        String tableNum = selectScan.nextLine().toLowerCase();
+        String tableNum = sc.nextLine().toLowerCase();
         System.out.print("Enter attribute > ");
-        String attribute = selectScan.nextLine().toLowerCase();
+        String attribute = sc.nextLine().toLowerCase();
         System.out.print("Enter value > ");
-        String value = selectScan.nextLine().toLowerCase();
+        String value = sc.nextLine().toLowerCase();
         
         if(tableNum.equals("1")){
             String header1 = "===========================Contact List 1" +
