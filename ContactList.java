@@ -190,7 +190,7 @@ public class ContactList {
                     intersect(cl1, cl2);
                     break;
                 case 2:
-                    System.out.println("Difference"); // TODO
+                    difference(cl1, cl2);
                     break;
                 case 3:
                     union(cl1, cl2);
@@ -208,6 +208,27 @@ public class ContactList {
                     System.out.println("Invalid input");
                     break;
             }
+        }
+    }
+
+    public static void difference(ContactList cl1, ContactList cl2){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter Contact List > ");
+        String list = sc.nextLine();
+        if(list.equals("1")){
+            String str = "===========================Contact List 1, Contact List 2" +
+                    "============================";
+            System.out.println(str);
+            System.out.println(cl1.table.difference(cl2.table));
+            System.out.println(str);
+        }else if(list.equals("2")){
+            String str = "===========================Contact List 2, Contact List 1" +
+                    "============================";
+            System.out.println(str);
+            System.out.println(cl2.table.difference(cl1.table));
+            System.out.println(str);
+        }else{
+            System.out.println("Invalid contact list number");
         }
     }
 
