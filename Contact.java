@@ -1,9 +1,29 @@
+/**
+ * Builds a contact object that contains personal information
+ * 
+ * @authors Levi Sweat & Alex Charlot
+ * @version 09/18/2023
+ */
 public class Contact implements ContactInterface, Cloneable{
     
-    private PersonalInfo person;   // Personal information
-    private Address address;       // Current address
-    private String phone;          // Phone number
-    private String email;          // Email  
+    /**
+     * Personal information
+     */
+    private PersonalInfo person;
+    
+    /**
+     * current Address
+     */
+    private Address address;
+    /**
+     * Phone number
+     */
+    private String phone;
+    
+    /**
+     * Email address
+     */
+    private String email;
     
     /**
      * Constructor for objects of class Contact
@@ -29,11 +49,11 @@ public class Contact implements ContactInterface, Cloneable{
     }
     
     /**
-    * Check to see if a record has an attribute. Should not be case sensitive.
-    * 
-    * @param attribute possible attribute within a record.
-    * @return true if the value is contained in the object, false otherwise.
-    */
+     * Check to see if a record has an attribute. Should not be case sensitive.
+     * 
+     * @param attribute possible attribute within a record.
+     * @return true if the value is contained in the object, false otherwise.
+     */
     public boolean exists(String attribute) {
         boolean result = false;
         attribute = attribute.toLowerCase();
@@ -45,7 +65,14 @@ public class Contact implements ContactInterface, Cloneable{
         return result;
     }
     
-    //interface method
+    /**
+     * Check to see if a record has an attribute containing a specific value. Should not be case sensitive.
+     * 
+     * @param attribute possible attribute within a record.
+     * @param value desired value of the attribute.
+     * @return true if the value is contained in the object, false otherwise.
+     * @throws IllegalArgumentException if the attribute is invalid.
+     */
     public boolean hasValue(String attribute, String value) throws IllegalArgumentException {
         boolean result = false;
         if(attribute.equals("phone")){
@@ -80,10 +107,23 @@ public class Contact implements ContactInterface, Cloneable{
         return result;  
     }
    
-    //interface method
+    /**
+     * Change the value of a specific attribute.
+     * 
+     * @param attribute possible attribute within a record.
+     * @param value new value of the attribute.
+     * @throws IllegalArgumentException if the attribute is invalid.
+     */
     public void setValue(String attribute, String value) throws IllegalArgumentException {
+            //TODO
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
 
+    /**
+     * Returns a copy of the object
+     * 
+     * @return string, a copy of the object
+     */
     public String toString(){
         String string = "        " + person.getFirst() + ", " + person.getLast() + ": (" + 
                                      person.getStatus() + "):";
@@ -97,15 +137,30 @@ public class Contact implements ContactInterface, Cloneable{
         return string;
     }
 
+    /**
+     * Gets the first name of the contact
+     * 
+     * @return string, the first name of the contact
+     */
     public String getFirst(){
         return this.person.getFirst();
     }
 
+    /**
+     * Gets the last name of the contact
+     * 
+     * @return string, the last name of the contact
+     */
     public String getLast(){
         return this.person.getLast();
     }
 
-
+    /**
+     * Compares two contact objects and returns true if they are equal
+     * 
+     * @param other the contact to compare to
+     * @return true if the contacts are equal, false otherwise
+     */
     public boolean equals(Contact other){
         boolean result = false;
         if(this.person.equals(other.person) && this.address.equals(other.address) &&
@@ -115,7 +170,9 @@ public class Contact implements ContactInterface, Cloneable{
         return result;
     }
 
-    //Said this should be an inner class, should personal info also be an inner class
+    /**
+     * Inner class that creates the address of a contact
+     */
     public class Address{
         
         private String streetAddress;
@@ -123,6 +180,14 @@ public class Contact implements ContactInterface, Cloneable{
         private String state;
         private int zipCode; //could be an int or a string
 
+        /**
+         * Constructor for objects of class Address
+         * 
+         * @param streetAddress street address 
+         * @param city city
+         * @param state state
+         * @param zipCode zip code
+         */
         public Address(String streetAddress, String city, String state, int zipCode){
             this.streetAddress = streetAddress;
             this.city = city;
@@ -130,6 +195,12 @@ public class Contact implements ContactInterface, Cloneable{
             this.zipCode = zipCode;
         }
 
+        /**
+         * Compares two address objects and returns true if they are equal
+         * 
+         * @param other the address to compare to
+         * @return true if the addresses are equal, false otherwise
+         */
         public boolean equals(Address other){
             boolean result = false;
             if(this.streetAddress.equals(other.streetAddress) && this.city.equals(other.city) &&

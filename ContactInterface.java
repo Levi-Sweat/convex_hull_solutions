@@ -1,3 +1,9 @@
+/**
+ * Interface for a contact object
+ * 
+ * @authors Levi Sweat & Alex Charlot
+ * @version 09/18/2023
+ */
 public interface ContactInterface {
     public final static int MAX_PHONE_NUM = 10;
   

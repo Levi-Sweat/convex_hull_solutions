@@ -252,6 +252,9 @@ public class Table<T extends Contact> {
         return string;
     }
 
+    /**
+     * Inner class that sets up the structure needed for a linked list
+     */
     public class Node<T> {
 
         private T data;
