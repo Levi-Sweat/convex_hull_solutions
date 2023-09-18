@@ -1,28 +1,55 @@
-public class Table<T extends Contact> {
-    private Node<T> head; // First record in the table
-    private Node<T> tail; // Last record in the table
-    private String title; // Label for the table
 
+public class Table<T extends Contact> {
+    
+    /**
+     * First record in the table
+     */
+    private Node<T> head;
+    
+    /**
+     * Last record in the table
+     */
+    private Node<T> tail;
+    
+    /**
+     * Label for the table
+     */
+    private String title;
+
+    /**
+     * Constructor that initializes fields
+     * 
+     * @param title string to initializes title field
+     */
     public Table(String title) {
         this.title = title;
         this.head = null;
         this.tail = null;
     }
 
+    /**
+     * Sets the head of the table
+     * 
+     * @return head, the head of the table
+     */
     public void setHead(Node<T> head) {
         this.head = head;
     }
 
+    /**
+     * Sets the tail of the table
+     * 
+     * @param tail the tail to set
+     */
     public void setTail(Node<T> tail) {
         this.tail = tail;
     }
 
-    // Table<T> difference(Table<T> table){
-    // //Creates a new table comprised of nodes in this table, but not in table.
-
-    // }
-
-    // Adds a new record to the end of the this table.
+    /**
+     * Adds a new record to the end of the this table.
+     * 
+     * @param data the data to be added
+     */
     void insert(T data) {
         Node<T> newNode = new Node<T>(data);
         if (head == null) { // if list is empty, set head and tail to new node
@@ -34,8 +61,15 @@ public class Table<T extends Contact> {
         }
     }
 
-    // Creates a new table comprised of nodes having a value for a specific
-    // attribute, created from both tables.
+    /**
+     * Creates a new table comprised of nodes having a value for a specific
+     * attribute, created from both tables.
+     * 
+     * @param attribute the attribute to search for
+     * @param value    the value to search for
+     * @param table    the table to compare to
+     * @return result, the table of intersections
+     */
     Table<T> intersect(String attribute, String value, Table<T> table) {
         Table<T> result = new Table<T>("result"); // table to return
 
@@ -73,6 +107,13 @@ public class Table<T extends Contact> {
         return result; // return created table to be printed
     }
 
+    /**
+     * Removes a node from the table that has a specific value for a specific
+     * attribute.
+     * 
+     * @param attribute the attribute to search for
+     * @param value    the value to search for
+     */
     void remove(String attribute, String value) {
 
         Node<T> current = head.next;
@@ -96,6 +137,14 @@ public class Table<T extends Contact> {
 
     }
 
+    /**
+     * Creates a new table comprised of nodes having a value for a specific
+     * attribute.
+     * 
+     * @param attribute the attribute to search for
+     * @param value     the value to search for
+     * @return result, the table of selected nodes
+     */
     Table<T> select(String attribute, String value) {
         Table<T> result = new Table<T>("result"); // table to return
         boolean found = false;
@@ -117,8 +166,13 @@ public class Table<T extends Contact> {
         return result; // return created table to be printed
     }
 
-     //Creates a new table comprised of nodes that occur in either table(s). No
-    // duplicates allowed.
+    /**
+     * Creates a new table comprised of nodes that occur in either table(s). No
+     * duplicates allowed.
+     * 
+     * @param table the table to compare to
+     * @return result, the table of unions
+     */
     Table<T> union(Table<T> table){
         Table<T> result = new Table<T>("result"); // table to return
         //determines if the element should be added to the result table
@@ -151,6 +205,13 @@ public class Table<T extends Contact> {
         return result; // return created table to be printed
     }
 
+    /**
+     * Creates a new table comprised of nodes that occur in this table, but not in
+     * the other table.
+     * 
+     * @param table the table to compare to
+     * @return result, the table of differences
+     */
     Table<T> difference (Table<T> table){
         Table<T> result = new Table<T>("result"); // table to return
         //determines if the element should be added to the result table
@@ -175,6 +236,11 @@ public class Table<T extends Contact> {
         return result; // return created table to be printed
     }
 
+    /**
+     * Converts the table to a string
+     * 
+     * @return string, the table as a string
+     */
     public String toString() {
         String string = "";
         string = head.data.toString();
@@ -217,7 +283,7 @@ public class Table<T extends Contact> {
         /**
          * Gets the data in a given node
          * 
-         * @return data the data at a given node
+         * @return data, the data at a given node
          */
         public T getData() {
             return data;
@@ -241,6 +307,11 @@ public class Table<T extends Contact> {
             this.data = data;
         }
 
+        /**
+         * Gets the next node
+         * 
+         * @return next, the next node
+         */
         public boolean hasNext() {
             return this.next != null;
         }

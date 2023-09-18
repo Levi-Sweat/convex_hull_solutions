@@ -5,6 +5,19 @@ public class Contact implements ContactInterface, Cloneable{
     private String phone;          // Phone number
     private String email;          // Email  
     
+    /**
+     * Constructor for objects of class Contact
+     * 
+     * @param last last name
+     * @param first first name
+     * @param status marital status
+     * @param street_address street address
+     * @param city city
+     * @param state state
+     * @param zip_code zip code
+     * @param phone phone number
+     * @param email email address
+     */
     public Contact(String last, String first, Status status, String street_address, String city,
                    String state, int zip_code, String phone, String email){
 
@@ -15,9 +28,21 @@ public class Contact implements ContactInterface, Cloneable{
 
     }
     
-    //interface method
+    /**
+    * Check to see if a record has an attribute. Should not be case sensitive.
+    * 
+    * @param attribute possible attribute within a record.
+    * @return true if the value is contained in the object, false otherwise.
+    */
     public boolean exists(String attribute) {
-        return true;
+        boolean result = false;
+        attribute = attribute.toLowerCase();
+        if(attribute.equals("first") || attribute.equals("last") || attribute.equals("status") ||
+           attribute.equals("street_address") || attribute.equals("city") || attribute.equals("state") ||
+           attribute.equals("zip_code") || attribute.equals("phone") || attribute.equals("email")){
+            result = true;
+           }
+        return result;
     }
     
     //interface method

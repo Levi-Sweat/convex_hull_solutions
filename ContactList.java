@@ -11,14 +11,15 @@ import java.util.*;
 
 public class ContactList {
 
-    private Table<Contact> table; // table that includes linked list of contacts
-
-    // private static ContactList cl1;
-    // private static ContactList cl2;
+    /**
+     * Table that includes linked list of contacts
+     */
+    private Table<Contact> table;
 
     /**
+     * Main method that creates two contact lists and displays a menu
      * 
-     * @param args
+     * @param args command line arguments
      */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -34,13 +35,13 @@ public class ContactList {
 
         // only keep going if database is successfullly created
         if (cl1.createDatabase(filename1) && cl2.createDatabase(filename2)) {
-            System.out.println(cl1.table.toString());
-            System.out.println(cl2.table.toString());
+            //System.out.println(cl1.table.toString());
+            //System.out.println(cl2.table.toString());
 
         }
 
         // display menu syntax (not in the right place yet)
-        System.out.println("Welcome to database display\n");
+        System.out.println("\nWelcome to database display");
 
         // starts the display menu loop
         displayMenu(cl1, cl2, sc);
@@ -50,6 +51,13 @@ public class ContactList {
 
     }
 
+    /**
+     * Creates a database from a file
+     * 
+     * @param filename the name of the file to be read
+     * @return result, true if the database was created successfully, false
+     *         otherwise
+     */
     public boolean createDatabase(String filename) {
         boolean result = true;
         try {
@@ -58,7 +66,6 @@ public class ContactList {
             String contact_type = filesc.nextLine();
 
             if (contact_type.equals("P")) {
-                System.out.println("personal contact");
                 table = new Table<Contact>("Personal Contacts");
 
                 // first contact is the head of the list
@@ -78,8 +85,6 @@ public class ContactList {
                 table.setTail(current);
 
             } else if (contact_type.equals("W")) {
-                System.out.println("work contact");
-
                 table = new Table<Contact>("Work Contacts");
 
                 // first contact is the head of the list
@@ -111,8 +116,13 @@ public class ContactList {
         return result;
     }
 
+    /**
+     * Creates a personal contact from a string
+     * 
+     * @param info the string to be parsed
+     * @return node, the node containing the contact
+     */
     public Table<Contact>.Node<Contact> createPersonalContact(String info) {
-        System.out.println("INFO_> " + info);
         String[] infoArray = info.split(",");
 
         // remove the whitespace from each element in the array,
@@ -134,7 +144,6 @@ public class ContactList {
     }
 
     public Table<Contact>.Node<Contact> createWorkContact(String info) {
-        System.out.println("INFO_> " + info);
         String[] infoArray = info.split(",");
 
         // remove the whitespace from each element in the array,
@@ -169,13 +178,20 @@ public class ContactList {
         return node;
     }
 
+    /**
+     * Displays a menu for the user to interact with the database
+     * 
+     * @param cl1 the first contact list
+     * @param cl2 the second contact list
+     * @param sc  the scanner to be used
+     */
     public static void displayMenu(ContactList cl1, ContactList cl2, Scanner sc) {
         // initialize input
         int input = 1;
         // while loop to keep displaying menu until user quits
         while (input != 0) {
             // print menu
-            System.out.println("Please make a choice:");
+            System.out.println("\nPlease make a choice:");
             String choice = "\t0) Quit\n\t1) Intersect\n\t2) Difference\n\t3) Union\n\t4) Select" +
                     "\n\t5) Remove\n\t6) Print both tables";
             System.out.println(choice);
@@ -211,6 +227,12 @@ public class ContactList {
         }
     }
 
+    /**
+     * Displays the difference between two contact lists
+     * 
+     * @param cl1 the first contact list
+     * @param cl2 the second contact list
+     */
     public static void difference(ContactList cl1, ContactList cl2){
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter Contact List > ");
@@ -232,6 +254,12 @@ public class ContactList {
         }
     }
 
+    /**
+     * Displays the union between two contact lists
+     * 
+     * @param cl1 the first contact list
+     * @param cl2 the second contact list
+     */
     public static void union(ContactList cl1, ContactList cl2){
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter Contact List > ");
@@ -253,7 +281,12 @@ public class ContactList {
         }
     }
 
-
+    /**
+     * Displays the intersection between two contact lists
+     * 
+     * @param cl1 the first contact list
+     * @param cl2 the second contact list
+     */
     public static void intersect(ContactList cl1, ContactList cl2) {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter Group > ");
@@ -279,6 +312,12 @@ public class ContactList {
         }
     }
 
+    /**
+     * Removes a contact from both contact lists
+     * 
+     * @param cl1 the first contact list
+     * @param cl2 the second contact list
+     */
     public static void remove(ContactList cl1, ContactList cl2) {
         Scanner sc = new Scanner(System.in);
 
@@ -290,6 +329,12 @@ public class ContactList {
         cl2.table.remove(attribute, value);
     }
 
+    /**
+     * Selects a contact from a contact list
+     * 
+     * @param cl1 the first contact list
+     * @param cl2 the second contact list
+     */
     public static void select(ContactList cl1, ContactList cl2) {
         Scanner selectScan = new Scanner(System.in);
 
@@ -317,7 +362,12 @@ public class ContactList {
         }
     }
 
-    // prints out both tables with a header
+    /**
+     * Prints both contact lists
+     * 
+     * @param table1 the first contact list
+     * @param table2 the second contact list
+     */
     public static void printBoth(ContactList table1, ContactList table2) {
         System.out.println("\n===========================Contact List 1============================");
         System.out.println(table1.table.toString());
@@ -327,7 +377,4 @@ public class ContactList {
         System.out.println("===========================Contact List 2============================\n");
 
     }
-
-    
-
 }
