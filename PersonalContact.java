@@ -2,11 +2,11 @@ public class PersonalContact extends Contact{
 
     private Label label;
 
-    // first, last, email, phone, street_address, city, state, zip_code, label
-    public PersonalContact(String first, String last, String email, String phone, String street_address, 
-                           String city, String state, int zip_code, String label){
+    // first, last, email, phone, streetAddress, city, state, zipCode, label
+    public PersonalContact(String first, String last, String email, String phone, String streetAddress, 
+                           String city, String state, int zipCode, String label){
 
-        super(first, last, Status.NA, street_address, city, state, zip_code, phone, email);
+        super(first, last, Status.NA, streetAddress, city, state, zipCode, phone, email);
 
         this.label = new Label(label);
 

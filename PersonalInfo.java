@@ -23,4 +23,19 @@ public class PersonalInfo {
         return this.status.getStatus();
     }
 
+    /**
+     * Checks if two personal infos are equal. Does not check the status as personalContacts always
+     * have a status of NA.
+     * 
+     * @param info
+     * @return
+     */
+    public boolean equals(PersonalInfo info){
+        boolean result = false;
+        if(this.first.equals(info.first) && this.last.equals(info.last)){
+            result = true;
+        }
+        return result;
+    }
+
 }

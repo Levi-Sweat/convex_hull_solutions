@@ -1,23 +1,20 @@
 import java.io.*;
 import java.util.*;
 
-//example javadoc comment
 /**
- * Constructs a set with the elements in list
+ * Entry point of the program, creates two tables from input text files that include 
+ * numerous operations.
  * 
- * @param list collection of elements to be added to set
- * @returns result
+ * @authors Levi Sweat & Alex Charlot
+ * @version 09/18/2023
  */
-
 public class ContactList {
 
-    /**
-     * Table that includes linked list of contacts
-     */
+    //Table that includes linked list of contacts
     private Table<Contact> table;
 
     /**
-     * Main method that creates two contact lists and displays a menu
+     * Main method that creates two contact lists and displays a menu.
      * 
      * @param args command line arguments
      */
@@ -33,15 +30,10 @@ public class ContactList {
         ContactList cl1 = new ContactList(); // used to create first database
         ContactList cl2 = new ContactList(); // udsed to create second database
 
-        // only keep going if database is successfullly created
-        if (cl1.createDatabase(filename1) && cl2.createDatabase(filename2)) {
-            //System.out.println(cl1.table.toString());
-            //System.out.println(cl2.table.toString());
+        cl1.createDatabase(filename1);
+        cl2.createDatabase(filename2);
 
-        }
-
-        // display menu syntax (not in the right place yet)
-        System.out.println("\nWelcome to database display");
+        System.out.println("Welcome to database display");
 
         // starts the display menu loop
         displayMenu(cl1, cl2, sc);
@@ -65,7 +57,7 @@ public class ContactList {
             Scanner filesc = new Scanner(new File(filename));
             String contact_type = filesc.nextLine();
 
-            if (contact_type.equals("P")) {
+            if (contact_type.equals("P")) { //personal contacts
                 table = new Table<Contact>("Personal Contacts");
 
                 // first contact is the head of the list
@@ -84,7 +76,7 @@ public class ContactList {
                 // set tail
                 table.setTail(current);
 
-            } else if (contact_type.equals("W")) {
+            } else if (contact_type.equals("W")) { //work contacts
                 table = new Table<Contact>("Work Contacts");
 
                 // first contact is the head of the list
@@ -109,7 +101,7 @@ public class ContactList {
             // close the scanner
             filesc.close();
 
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) { //issue opening the scanner
             System.out.println("Incorrect file name.");
             result = false;
         }
@@ -123,7 +115,7 @@ public class ContactList {
      * @return node, the node containing the contact
      */
     public Table<Contact>.Node<Contact> createPersonalContact(String info) {
-        String[] infoArray = info.split(",");
+        String[] infoArray = info.split(","); //create array with elements based on ',' in string
 
         // remove the whitespace from each element in the array,
         // and trim whitespace from address and city
@@ -143,8 +135,14 @@ public class ContactList {
         return node;
     }
 
+    /**
+     * Creates a work contact from a string
+     * 
+     * @param info the string to be parsed
+     * @return node, the node containing the contact
+     */
     public Table<Contact>.Node<Contact> createWorkContact(String info) {
-        String[] infoArray = info.split(",");
+        String[] infoArray = info.split(","); //create array with elements based on ',' in string
 
         // remove the whitespace from each element in the array,
         // and trim whitespace from address and city, title, company, and department
@@ -155,18 +153,6 @@ public class ContactList {
                 infoArray[i] = infoArray[i].replaceAll("\\s", "");
             }
         }
-        // infoArray[0] last
-        // infoArray[1] first
-        // infoArray[2] status
-        // infoArray[3] email
-        // infoArray[4] phone
-        // infoArray[5] street address
-        // infoArray[6] city
-        // infoArray[7] state
-        // infoArray[8] zip
-        // infoArray[9] title
-        // infoArray[10] company
-        // infoArray[11] department
 
         WorkContact wc = new WorkContact(infoArray[0], infoArray[1], infoArray[2],
                     infoArray[5], infoArray[6], infoArray[7],
@@ -237,13 +223,13 @@ public class ContactList {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter Contact List > ");
         String list = sc.nextLine();
-        if(list.equals("1")){
+        if(list.equals("1")){ //call the difference method in table 1
             String str = "===========================Contact List 1, Contact List 2" +
                     "============================";
             System.out.println(str);
             System.out.println(cl1.table.difference(cl2.table));
             System.out.println(str);
-        }else if(list.equals("2")){
+        }else if(list.equals("2")){ //call the difference method in table 2
             String str = "===========================Contact List 2, Contact List 1" +
                     "============================";
             System.out.println(str);

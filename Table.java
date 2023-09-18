@@ -212,7 +212,7 @@ public class Table<T extends Contact> {
      * @param table the table to compare to
      * @return result, the table of differences
      */
-    Table<T> difference (Table<T> table){
+    Table<T> difference(Table<T> table){
         Table<T> result = new Table<T>("result"); // table to return
         //determines if the element should be added to the result table
         boolean addElement = true;
@@ -222,8 +222,7 @@ public class Table<T extends Contact> {
         while(current != null){
             addElement = true;
             while(current2 != null){
-                if((current.data.getFirst().equals(current2.data.getFirst()) && 
-                   current.data.getLast().equals(current2.data.getLast()))){
+                if((current.data.equals(current2.data))){
                     addElement = false;
                 }
                 current2 = current2.next;

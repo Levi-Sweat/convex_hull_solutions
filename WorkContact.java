@@ -5,10 +5,10 @@ public class WorkContact extends Contact{
     private String department;  // Contact’s department
                                                   //status or string??
     public WorkContact(String last, String first, String status_string, String street_address,
-                       String city, String state, int zip_code, String phone, String email, 
+                       String city, String state, int zipCode, String phone, String email, 
                        String title, String company, String department){
         
-        super(last, first, Status.valueOf(status_string.toUpperCase()), street_address, city, state, zip_code, phone, email);
+        super(last, first, Status.valueOf(status_string.toUpperCase()), street_address, city, state, zipCode, phone, email);
 
         this.title = title;
         this.company = company;

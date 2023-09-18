@@ -11,18 +11,18 @@ public class Contact implements ContactInterface, Cloneable{
      * @param last last name
      * @param first first name
      * @param status marital status
-     * @param street_address street address
+     * @param streetAddress street address
      * @param city city
      * @param state state
-     * @param zip_code zip code
+     * @param zipCode zip code
      * @param phone phone number
      * @param email email address
      */
-    public Contact(String last, String first, Status status, String street_address, String city,
-                   String state, int zip_code, String phone, String email){
+    public Contact(String last, String first, Status status, String streetAddress, String city,
+                   String state, int zipCode, String phone, String email){
 
         this.person = new PersonalInfo(last, first, status);
-        this.address = new Address(street_address, city, state, zip_code);
+        this.address = new Address(streetAddress, city, state, zipCode);
         this.phone = phone;
         this.email = email;
 
@@ -38,8 +38,8 @@ public class Contact implements ContactInterface, Cloneable{
         boolean result = false;
         attribute = attribute.toLowerCase();
         if(attribute.equals("first") || attribute.equals("last") || attribute.equals("status") ||
-           attribute.equals("street_address") || attribute.equals("city") || attribute.equals("state") ||
-           attribute.equals("zip_code") || attribute.equals("phone") || attribute.equals("email")){
+           attribute.equals("streetAddress") || attribute.equals("city") || attribute.equals("state") ||
+           attribute.equals("zipCode") || attribute.equals("phone") || attribute.equals("email")){
             result = true;
            }
         return result;
@@ -64,8 +64,8 @@ public class Contact implements ContactInterface, Cloneable{
         if(attribute.equals("status")){
             if(this.person.getStatus().toLowerCase().equals(value)) result = true;
         }
-        if(attribute.equals("street_address")){
-            if(this.address.street_address.toLowerCase().equals(value)) result = true;
+        if(attribute.equals("streetAddress")){
+            if(this.address.streetAddress.toLowerCase().equals(value)) result = true;
         }
         if(attribute.equals("city")){
             if(this.address.city.toLowerCase().equals(value)) result = true;
@@ -73,10 +73,10 @@ public class Contact implements ContactInterface, Cloneable{
         if(attribute.equals("state")){
             if(this.address.state.toLowerCase().equals(value)) result = true;
         }
-        if(attribute.equals("zip_code")){
-            if(this.address.zip_code == Integer.parseInt(value)) result = true;
+        if(attribute.equals("zipCode")){
+            if(this.address.zipCode == Integer.parseInt(value)) result = true;
         }
-        //street_address, city, state, zip_code
+        //streetAddress, city, state, zipCode
         return result;  
     }
    
@@ -91,8 +91,8 @@ public class Contact implements ContactInterface, Cloneable{
             string += " ";
         }
 
-        string += "Phone: " + this.phone + "\n        " + address.street_address + "\n        " +
-                  address.city + ", " + address.state + " " + address.zip_code;
+        string += "Phone: " + this.phone + "\n        " + address.streetAddress + "\n        " +
+                  address.city + ", " + address.state + " " + address.zipCode;
         string += "\n--------------------------------------------------------------\n";
         return string;
     }
@@ -105,19 +105,38 @@ public class Contact implements ContactInterface, Cloneable{
         return this.person.getLast();
     }
 
+
+    public boolean equals(Contact other){
+        boolean result = false;
+        if(this.person.equals(other.person) && this.address.equals(other.address) &&
+           this.phone.equals(other.phone) && this.email.equals(other.email)){
+            result = true;
+        }
+        return result;
+    }
+
     //Said this should be an inner class, should personal info also be an inner class
     public class Address{
         
-        private String street_address;
+        private String streetAddress;
         private String city;
         private String state;
-        private int zip_code; //could be an int or a string
+        private int zipCode; //could be an int or a string
 
-        public Address(String street_address, String city, String state, int zip_code){
-            this.street_address = street_address;
+        public Address(String streetAddress, String city, String state, int zipCode){
+            this.streetAddress = streetAddress;
             this.city = city;
             this.state = state;
-            this.zip_code = zip_code;
+            this.zipCode = zipCode;
+        }
+
+        public boolean equals(Address other){
+            boolean result = false;
+            if(this.streetAddress.equals(other.streetAddress) && this.city.equals(other.city) &&
+               this.state.equals(other.state) && this.zipCode == other.zipCode){
+                result = true;
+            }
+            return result;
         }
     }
 }
