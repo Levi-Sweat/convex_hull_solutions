@@ -1,3 +1,5 @@
+from math import atan2
+from matplotlib.pylab import det, randint
 import matplotlib.pyplot as plt
 import numpy as np
 import random
@@ -35,69 +37,77 @@ class Point:
     def __str__ (self):
         return "(" + str(self.x) + ", " + str(self.y) + ")"
 
-#used for sorting the points by angle in the graham scan
-def orientation(p0, p1, p2):
-    print("What is p0? " + str(p0))
-    val = ((p1.y - p0.y) * (p2.x - p1.x) - (p1.x - p0.x) * (p2.y - p1.y))
-    if val == 0:
-        return 0  # collinear
-    elif val > 0:
-        return 1  # clock wise
-    else:
-        return 2  # counterclock wise
+#used for determining which points are on the convex hull
+def orientation(p1, p2, p3):
 
-def distSq(p1, p2):
-    return ((p1.x - p2.x) * (p1.x - p2.x) +
-            (p1.y - p2.y) * (p1.y - p2.y))
+    """ 
+    > 0: CCW turn
+    < 0 CW turn
+    = 0: colinear
+    """
 
-def sort_slope(p1, p2):
-    if p1.x == p2.x:
-        return float('inf')
-    else:
-        return 1.0*(p1.y-p2.y)/(p1.x-p2.x)
+    return (p2.x - p1.x) * (p3.y - p1.y) \
+        -  (p2.y - p1.y) * (p3.x - p1.x)
 
-def compare(p1, p2):
 
-    result = 0
-    # Find orientation
-    o = orientation(p0, p1, p2)
-    if o == 0:
-        if distSq(p0, p2) >= distSq(p0, p1): 
-            result = -1 #if p2 is closer to p0 than p1, then p2 comes before p1
-        else:
-            result = 1
-    else:
-        if o == 2:
-            result = -1
-        else:
-            result = 1
-    return result
+def polar_angle(p0, p1 = None):
+    if p1 == None: p1 = anchor
+    y_span = p0.y - p1.y
+    x_span = p0.x - p1.x
+    return atan2(y_span, x_span)
+
+
+def distance(p0, p1 = None):
+    if p1 == None: p1 = anchor
+    y_span = p0.y - p1.y
+    x_span = p0.x - p1.x
+    return y_span**2 + x_span**2
+
+def polarsort(list):
+    if len(list) <= 1: return list
+
+    smaller, equal, larger = [], [], []
+    piv_ang = polar_angle(list[randint(0, len(list) - 1)])
+
+    for pt in list:
+        pt_ang = polar_angle(pt)
+        if pt_ang < piv_ang: smaller.append(pt)
+        elif pt_ang == piv_ang: equal.append(pt)
+        else: larger.append(pt)
+    return polarsort(smaller) + sorted(equal, key = distance) + polarsort(larger)
 
 def graham_scan(points):
+    global anchor
+
     points = merge_sort(points) #points sorted by y value, then by smalllest x value if y values are equal
     
+    anchor = points[0]
+
     print("After sorting by y value:")
 
     for i in range(len(points)):
         print(points[i])
 
-    p0 = points[0] #updated first point after points have been sorted so that at 0 is the point with the smallest y value
+    points = polarsort(points)
 
-    print("First sort by angle: ")
-
-    points = sorted(points, key=cmp_to_key(compare)) #sorts points in counterclockwise order from p0 (which has to be on convex hull)
-
+    print("After sorting by polar angle:")
+    
     for i in range(len(points)):
         print(points[i])
-    
-    start = points[0]
-    points.sort(key=lambda p: (sort_slope(p,start), -p.y,p.x))
-    
-    
-    print("Second sort by angle:")
 
-    for i in range(len(points)):
-        print(points[i])
+
+    hull = [anchor, points[1]]
+    for s in points[2:]:
+        while orientation(hull[-2], hull[-1], s) <= 0: #############CHANGE ORIENTATION TO BE LIKE DET IN EXAMPLE
+            del hull[-1] #backtrack
+            if len(hull) < 2: break
+        hull.append(s)
+
+    print("Output of grahams scan: ")
+    for i in range(len(hull)):
+        print(hull[i])
+
+    return hull
 
 
 
@@ -187,6 +197,13 @@ p0 = points[0] #first point, used in calculating the orientation for the graham 
 points = graham_scan(points)
 
 
+
+i = 0
+while i < (len(points) - 1):
+    ax.plot([points[i].x, points[i + 1].x], [points[i].y, points[i+1].y])
+    i += 1
+
+ax.plot([points[-1].x, points[0].x], [points[-1].y, points[0].y])
 
 
 
