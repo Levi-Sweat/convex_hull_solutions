@@ -178,8 +178,8 @@ def brute_force(points):
                 k = 0
                 keepGoing = True
                 while k < len(points) and keepGoing:
-                    if k != i and k != j:
-                        if orientation(points[i], points[j], points[k]) >= 0: #maybe k should be in the middle and j should be on the end
+                    if k != i and k != j: #issue with: ijk & ikj
+                        if orientation(points[i], points[k], points[j]) >= 0: #maybe k should be in the middle and j should be on the end
                             keepGoing = False
                     k += 1
                 if keepGoing:
@@ -217,7 +217,9 @@ p0 = points[0] #first point, used in calculating the orientation for the graham 
 brute_force_points = brute_force(points)
 for i in range(len(brute_force_points)):
     ax.plot([brute_force_points[i][0].x, brute_force_points[i][1].x], [brute_force_points[i][0].y, brute_force_points[i][1].y])
-ax.plot([brute_force_points[-1][1].x, brute_force_points[0][0].x], [brute_force_points[-1][1].y, brute_force_points[0][0].y])
+
+
+#ax.plot([brute_force_points[-1][1].x, brute_force_points[0][0].x], [brute_force_points[-1][1].y, brute_force_points[0][0].y])
 
 
 # i = 0
