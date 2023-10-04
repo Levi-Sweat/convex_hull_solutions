@@ -170,6 +170,24 @@ def merge(left, right):
 
     return result
 
+def brute_force(points):
+    result = []
+    for i in range(len(points)):
+        for j in range(len(points)):
+            if i != j:
+                k = 0
+                keepGoing = True
+                while k < len(points) and keepGoing:
+                    if k != i and k != j:
+                        if orientation(points[i], points[j], points[k]) >= 0: #maybe k should be in the middle and j should be on the end
+                            keepGoing = False
+                    k += 1
+                if keepGoing:
+                    result.append([points[i], points[j]])
+
+                
+    return result
+
 plt.style.use('_mpl-gallery')
 
 fig, ax = plt.subplots()  # Create a figure containing a single axes.
@@ -194,16 +212,20 @@ for i in range(len(points)):
 
 p0 = points[0] #first point, used in calculating the orientation for the graham scan
 
-points = graham_scan(points)
+# points = graham_scan(points)
+
+brute_force_points = brute_force(points)
+for i in range(len(brute_force_points)):
+    ax.plot([brute_force_points[i][0].x, brute_force_points[i][1].x], [brute_force_points[i][0].y, brute_force_points[i][1].y])
+ax.plot([brute_force_points[-1][1].x, brute_force_points[0][0].x], [brute_force_points[-1][1].y, brute_force_points[0][0].y])
 
 
+# i = 0
+# while i < (len(points) - 1):
+#     ax.plot([points[i].x, points[i + 1].x], [points[i].y, points[i+1].y])
+#     i += 1
 
-i = 0
-while i < (len(points) - 1):
-    ax.plot([points[i].x, points[i + 1].x], [points[i].y, points[i+1].y])
-    i += 1
-
-ax.plot([points[-1].x, points[0].x], [points[-1].y, points[0].y])
+# ax.plot([points[-1].x, points[0].x], [points[-1].y, points[0].y])
 
 
 
