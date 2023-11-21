@@ -8,3 +8,22 @@ project1/Status.java
 project1/Table.java
 project1/WorkContact.java
 project1/workContacts2.txt
+code_examples/dfs-bfs_python/.DS_Store
+code_examples/dfs-bfs_python/adjacency_list_graph.py
+code_examples/dfs-bfs_python/adjacency_matrix_graph.py
+code_examples/dfs-bfs_python/bfs.py
+code_examples/dfs-bfs_python/dfs.py
+code_examples/dfs-bfs_python/dll_sentinel.py
+code_examples/dfs-bfs_python/fifo_queue.py
+code_examples/dfs-bfs_python/generate_random_graph.py
+code_examples/dfs-bfs_python/print_path.py
+convex_hull_honors_project/main.py
+convex_hull_honors_project/step_plot_ex.py
+convex_hull_honors_project/__pycache__/algorithms.cpython-310.pyc
+slides_for_test2_prep/Breadth-first Search and Depth-first Search.pptx
+slides_for_test2_prep/Graph Terminology Continued and Graph Representation.pptx
+slides_for_test2_prep/Master Method Continued and Graph Terminology.pptx
+slides_for_test2_prep/More Recurrence Examples.pptx
+slides_for_test2_prep/Recurrences and Recurrence Trees.pptx
+slides_for_test2_prep/Test 2 Review and Graphs Continued.pptx
+slides_for_test2_prep/The Master Method.pptx
