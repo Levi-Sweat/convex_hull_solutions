@@ -179,6 +179,11 @@ def graham_scan(points):
     return hull
 
 def output_sensitive(points):
+
+    plt.style.use('_mpl-gallery')
+
+    plt.figure()
+
     leftmost = points[0]
     for i in range(len(points)): #get the leftmost point (smallest x value)
         if points[i].x < leftmost.x:
@@ -195,8 +200,27 @@ def output_sensitive(points):
         checking = points[index]
 
         crossProduct = orientation(currentVertex, nextVertex, checking)
+
+        #############
+        plt.clf()
+
+        for a in range(len(points)):
+            plt.scatter(points[a].x, points[a].y)
+        
+        for b in range(len(hull) - 1):
+            plt.plot([hull[b].x, hull[b + 1].x], [hull[b].y, hull[b + 1].y])
+        
+        plt.plot([currentVertex.x, nextVertex.x], [currentVertex.y, nextVertex.y])
+        plt.plot([nextVertex.x, checking.x], [nextVertex.y, checking.y])
+
+        plt.show(block=False)
+        plt.pause(0.00000001)
+        #############
+
+
         if crossProduct < 0:
             nextVertex = checking
+            index = 0
         index += 1
         if index == len(points):
             if nextVertex == leftmost:
@@ -205,6 +229,20 @@ def output_sensitive(points):
             hull.append(nextVertex)
             currentVertex = nextVertex
             nextVertex = leftmost
+
+
+    plt.clf()
+
+    for c in range(len(points)):
+        plt.scatter(points[c].x, points[c].y)    
+
+
+    for b in range(len(hull) - 1): 
+        plt.plot([hull[b].x, hull[b + 1].x], [hull[b].y, hull[b + 1].y])
+
+    plt.plot([hull[-1].x, hull[0].x], [hull[-1].y, hull[0].y])
+
+    plt.show()
 
     return hull
 
