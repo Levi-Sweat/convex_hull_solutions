@@ -1,5 +1,6 @@
 from math import atan2
 from random import randint
+import matplotlib.pyplot as plt
 
 
 def orientation(p1, p2, p3):
@@ -160,6 +161,11 @@ def output_sensitive(points):
     return hull
 
 def brute_force(points):
+
+    plt.style.use('_mpl-gallery')
+
+    plt.figure()
+
     result = []
     for i in range(len(points)):
         for j in range(len(points)):
@@ -167,12 +173,37 @@ def brute_force(points):
                 k = 0
                 keepGoing = True
                 while k < len(points) and keepGoing:
-                    if k != i and k != j: #issue with: ijk & ikj
+                    if k != i and k != j:
+                        
+                        plt.clf()
+
+                        for a in range(len(points)):
+                            #ax.scatter(points[i].x, points[i].y)
+                            plt.scatter(points[a].x, points[a].y)
+                        
+                        for b in range(len(result)):
+                            plt.plot([result[b][0].x, result[b][1].x], [result[b][0].y, result[b][1].y])
+                        
+                        plt.plot([points[i].x, points[j].x], [points[i].y, points[j].y])
+                        plt.plot([points[j].x, points[k].x], [points[j].y, points[k].y])
+
+                        plt.show(block=False)
+                        plt.pause(0.00000001)
+
                         if orientation(points[i], points[k], points[j]) >= 0:
                             keepGoing = False
                     k += 1
                 if keepGoing:
                     result.append([points[i], points[j]])
 
+    plt.clf()
+
+    for c in range(len(points)):
+        plt.scatter(points[c].x, points[c].y)    
+
+    for d in range(len(result)):
+        plt.plot([result[d][0].x, result[d][1].x], [result[d][0].y, result[d][1].y])
+
+    plt.show()
                 
     return result

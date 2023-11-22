@@ -106,7 +106,7 @@ def main():
         display_graham_scan(points, hull)
     elif algo == "2":
         hull = algorithms.brute_force(points)
-        display_brute_foce(points, hull)
+        #display_brute_foce(points, hull)
     elif algo == "3":
         hull = algorithms.output_sensitive(points)
         display_graham_scan(points, hull) #works!
