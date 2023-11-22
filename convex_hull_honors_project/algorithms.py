@@ -98,35 +98,83 @@ def merge(left, right):
     return result
 
 def graham_scan(points):
-    global anchor
+    global anchor #probably don't need this line
+
+    plt.style.use('_mpl-gallery')
+
+    plt.figure()
 
     points = merge_sort(points) #points sorted by y value, then by smalllest x value if y values are equal
     
     anchor = points[0]
-
-    print("After sorting by y value:")
 
     for i in range(len(points)):
         print(points[i])
 
     points = polarsort(points)
 
-    print("After sorting by polar angle:")
-    
-    for i in range(len(points)):
-        print(points[i])
+    plt.clf()
 
+    for a in range(len(points)):
+        plt.scatter(points[a].x, points[a].y)
+    
+    plt.plot([anchor.x, points[1].x], [anchor.y, points[1].y])
+
+    plt.show(block=False)
+    plt.pause(1)
 
     hull = [anchor, points[1]]
     for s in points[2:]:
-        while orientation(hull[-2], hull[-1], s) <= 0: #############CHANGE ORIENTATION TO BE LIKE DET IN EXAMPLE
+        while orientation(hull[-2], hull[-1], s) <= 0:  # keep deleting until a CCW turn
+
+            #displaying stuff here
+            plt.clf()
+
+            for a in range(len(points)):
+                plt.scatter(points[a].x, points[a].y)
+            
+            for b in range(len(hull) - 1): #might be able to do -2 or -3 here cuz the next lines plot the same points
+                plt.plot([hull[b].x, hull[b + 1].x], [hull[b].y, hull[b + 1].y])
+            
+            plt.plot([hull[-2].x, hull[-1].x], [hull[-2].y, hull[-1].y])
+            plt.plot([hull[-1].x, s.x], [hull[-1].y, s.y])
+
+            plt.show(block=False)
+            plt.pause(1)
+            ####################
+
             del hull[-1] #backtrack
             if len(hull) < 2: break
+        
+        ####################
+        plt.clf()
+
+        for a in range(len(points)):
+            plt.scatter(points[a].x, points[a].y)
+        
+        for b in range(len(hull) - 1): #might be able to do -2 or -3 here cuz the next lines plot the same points
+            plt.plot([hull[b].x, hull[b + 1].x], [hull[b].y, hull[b + 1].y])
+        
+        plt.plot([hull[-2].x, hull[-1].x], [hull[-2].y, hull[-1].y])
+        plt.plot([hull[-1].x, s.x], [hull[-1].y, s.y])
+
+        plt.show(block=False)
+        plt.pause(1)
+        ####################
+
         hull.append(s)
 
-    print("Output of grahams scan: ")
-    for i in range(len(hull)):
-        print(hull[i])
+    plt.clf()
+
+    for a in range(len(points)):
+        plt.scatter(points[a].x, points[a].y)
+    
+    for b in range(len(hull) - 1): 
+        plt.plot([hull[b].x, hull[b + 1].x], [hull[b].y, hull[b + 1].y])
+
+    plt.plot([hull[-1].x, hull[0].x], [hull[-1].y, hull[0].y])
+
+    plt.show()
 
     return hull
 
