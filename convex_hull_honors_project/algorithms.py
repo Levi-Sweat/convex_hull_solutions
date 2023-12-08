@@ -6,9 +6,14 @@ import matplotlib.pyplot as plt
 def orientation(p1, p2, p3):
 
     """ 
-    > 0: CCW turn
-    < 0 CW turn
-    = 0: colinear
+    Gets the determinant of a matrix to determine if the points make a CCW turn.
+    
+    Args:
+    p1 - The first point.
+    p2 - The second point.
+    p3 - The third point.
+    
+    Returns: > 0: CCW turn, < 0 CW turn, = 0: colinear
     """
 
     return (p2.x - p1.x) * (p3.y - p1.y) \
@@ -16,6 +21,15 @@ def orientation(p1, p2, p3):
 
 
 def polar_angle(p0, p1 = None):
+    """
+    Calculates the polar angle of a point about the anchor point.
+    
+    Args:
+    p0 - The first point.
+    p1 - The second point, typically the anchor point.
+    
+    Returns: The polar angle of the point about the anchor point.
+    """
     if p1 == None: p1 = anchor
     y_span = p0.y - p1.y
     x_span = p0.x - p1.x
@@ -23,15 +37,34 @@ def polar_angle(p0, p1 = None):
 
 
 def distance(p0, p1 = None):
+    """
+    Calculates the distance between two points.
+    
+    Args:
+    p0 - The first point.
+    p1 - The second point.
+    
+    Returns: The distance between the two points.
+    """
+
     if p1 == None: p1 = anchor
     y_span = p0.y - p1.y
     x_span = p0.x - p1.x
     return y_span**2 + x_span**2
 
 def polarsort(list):
+    """
+    Recursive method that sorts the list by polar angle about the anchor point.
+    
+    Args:
+    list- the list of points to be sorted
+    
+    Returns: the sorted list
+    """
     if len(list) <= 1: return list
 
     smaller, equal, larger = [], [], []
+    
     piv_ang = polar_angle(list[randint(0, len(list) - 1)])
 
     for pt in list:
@@ -42,6 +75,15 @@ def polarsort(list):
     return polarsort(smaller) + sorted(equal, key = distance) + polarsort(larger)
 
 def merge_sort(array):
+    """
+    Sorts the input array using the merge sort algorithm.
+    
+    Args:
+    array- the array to be sorted
+    
+    Returns: the sorted array
+    """
+
     # If the input array contains fewer than two elements,
     # then return it as the result of the function
     if len(array) < 2:
@@ -57,6 +99,16 @@ def merge_sort(array):
         right=merge_sort(array[midpoint:]))
 
 def merge(left, right):
+    """
+    Helper method for merge_sort that merges the two sorted arrays.
+    
+    Args:
+    left- the left array to be merged
+    right- the right array to be merged
+    
+    Returns: the merged arrays
+    """
+
     # If the first array is empty, then nothing needs
     # to be merged, and you can return the second array as the result
     if len(left) == 0:
@@ -97,73 +149,94 @@ def merge(left, right):
 
     return result
 
-def graham_scan(points):
-    global anchor #probably don't need this line
+def setup_plot():
+    """
+    Used to setup the initial style and figure for plotting each algorithm.
+    """
 
     plt.style.use('_mpl-gallery')
 
     plt.figure()
 
-    points = merge_sort(points) #points sorted by y value, then by smalllest x value if y values are equal
-    
-    anchor = points[0]
 
-    for i in range(len(points)):
-        print(points[i])
+
+def graham_scan(points):
+    """
+    Implements the graham's scan algorithm to compute the convex hull of a set of points. Sorts the
+    points by smallest y value then polarly sorts them about an anchor point. Then, starting with
+    the first two points, checks if the next point makes a CCW turn. If it does, it is added to
+    the hull. If not, the last point is removed.
+    
+    Args: points- the list of points to be sorted"""
+    global anchor
+
+    setup_plot()
+
+
+    points = merge_sort(points) #points sorted by y value, 
+                                #then by smalllest x value if y values are equal
+    anchor = points[0] # anchor is the point with the msmallest y value
 
     points = polarsort(points)
 
     plt.clf()
 
-    for a in range(len(points)):
+    for a in range(len(points)): # plot points
         plt.scatter(points[a].x, points[a].y)
     
+    #plot the line from the anchor to the first point on the hull
     plt.plot([anchor.x, points[1].x], [anchor.y, points[1].y])
 
     plt.show(block=False)
     plt.pause(1)
 
     hull = [anchor, points[1]]
+
     for s in points[2:]:
         while orientation(hull[-2], hull[-1], s) <= 0:  # keep deleting until a CCW turn
 
-            #displaying stuff here
-            plt.clf()
+            #############
+            plt.clf() # clear the previous plot
 
-            for a in range(len(points)):
+            for a in range(len(points)): # plot points
                 plt.scatter(points[a].x, points[a].y)
             
-            for b in range(len(hull) - 1): #might be able to do -2 or -3 here cuz the next lines plot the same points
+            for b in range(len(hull) - 1): # plot the hull thusfar
                 plt.plot([hull[b].x, hull[b + 1].x], [hull[b].y, hull[b + 1].y])
             
+            #plot the orientation we are currently checking
             plt.plot([hull[-2].x, hull[-1].x], [hull[-2].y, hull[-1].y])
             plt.plot([hull[-1].x, s.x], [hull[-1].y, s.y])
-
-            plt.show(block=False)
-            plt.pause(1)
-            ####################
+            
+            #show the plot for a short time before continuing
+            plt.show(block=False) 
+            plt.pause(0.00001)
+            #############
 
             del hull[-1] #backtrack
             if len(hull) < 2: break
         
-        ####################
-        plt.clf()
+       #############
+        plt.clf() # clear the plot
 
-        for a in range(len(points)):
+        for a in range(len(points)): # plot points
             plt.scatter(points[a].x, points[a].y)
         
-        for b in range(len(hull) - 1): #might be able to do -2 or -3 here cuz the next lines plot the same points
+        for b in range(len(hull) - 1): # plot the hull thusfar
             plt.plot([hull[b].x, hull[b + 1].x], [hull[b].y, hull[b + 1].y])
         
+        #plot the orientation we are currently checking
         plt.plot([hull[-2].x, hull[-1].x], [hull[-2].y, hull[-1].y])
         plt.plot([hull[-1].x, s.x], [hull[-1].y, s.y])
 
         plt.show(block=False)
         plt.pause(1)
-        ####################
+        #############
 
         hull.append(s)
 
+    #plot the final hull
+    #########
     plt.clf()
 
     for a in range(len(points)):
@@ -175,31 +248,38 @@ def graham_scan(points):
     plt.plot([hull[-1].x, hull[0].x], [hull[-1].y, hull[0].y])
 
     plt.show()
-
-    return hull
+    #########
 
 def output_sensitive(points):
+    """
+    Implements the output sensitive algorithm to compute the convex hull of a set of points. 
+    Sorts the points by the smallest x value, then checks if there is ever a clockwise turn 
+    between 2 points and every other point. If so, move on to the next point. If not, the point
+    must be on the convex hull, so add it.
+    
+    Args: points- the list of points to be sorted
+    """
 
-    plt.style.use('_mpl-gallery')
+    setup_plot()
 
-    plt.figure()
-
-    leftmost = points[0]
+    leftmost = 0
+    currentVertex = 0
     for i in range(len(points)): #get the leftmost point (smallest x value)
-        if points[i].x < leftmost.x:
-            leftmost = points[i]
+        if points[i].x < points[leftmost].x:
+            leftmost = i
+            currentVertex = i
+
 
     hull = []
-    currentVertex = leftmost
-    hull.append(currentVertex)
-    nextVertex = points[1]
+    hull.append(points[currentVertex])
+    nextVertex = 1
     index = 2
     keepGoing = True
     while keepGoing:
 
-        checking = points[index]
+        checking = index
 
-        crossProduct = orientation(currentVertex, nextVertex, checking)
+        crossProduct = orientation(points[currentVertex], points[nextVertex], points[checking])
 
         #############
         plt.clf()
@@ -210,27 +290,30 @@ def output_sensitive(points):
         for b in range(len(hull) - 1):
             plt.plot([hull[b].x, hull[b + 1].x], [hull[b].y, hull[b + 1].y])
         
-        plt.plot([currentVertex.x, nextVertex.x], [currentVertex.y, nextVertex.y])
-        plt.plot([nextVertex.x, checking.x], [nextVertex.y, checking.y])
+        plt.plot([points[currentVertex].x, points[nextVertex].x], 
+                 [points[currentVertex].y, points[nextVertex].y])
+        plt.plot([points[nextVertex].x, points[checking].x], 
+                 [points[nextVertex].y, points[checking].y])
 
         plt.show(block=False)
         plt.pause(0.00000001)
-        #############
+        ###############
 
-
+        #if the points don't turn CCW, move on to the next point
         if crossProduct < 0:
             nextVertex = checking
             index = 0
         index += 1
+        #if we've checked all the points, we've found a point that is on the hull
         if index == len(points):
-            if nextVertex == leftmost:
+            if points[nextVertex] == points[leftmost]:
                 keepGoing = False
             index = 0
-            hull.append(nextVertex)
+            hull.append(points[nextVertex])
             currentVertex = nextVertex
             nextVertex = leftmost
 
-
+    ############
     plt.clf()
 
     for c in range(len(points)):
@@ -243,14 +326,18 @@ def output_sensitive(points):
     plt.plot([hull[-1].x, hull[0].x], [hull[-1].y, hull[0].y])
 
     plt.show()
-
-    return hull
+    ############
 
 def brute_force(points):
-
-    plt.style.use('_mpl-gallery')
-
-    plt.figure()
+    """
+    Implements the brute force algorithm to compute the convex hull of a set of points.
+    Randomly selects 2 points, checks if they are on the hull, then moves on to the next 2 random
+    points.
+    
+    Args: points- the list of points to be sorted
+    """
+    
+    setup_plot()
 
     result = []
     for i in range(len(points)):
@@ -259,37 +346,48 @@ def brute_force(points):
                 k = 0
                 keepGoing = True
                 while k < len(points) and keepGoing:
-                    if k != i and k != j:
-                        
+                    if k != i and k != j: 
+                    #if the randomly selected k doesn't equal i or j, check orientation
+
+                        #############
                         plt.clf()
 
                         for a in range(len(points)):
-                            #ax.scatter(points[i].x, points[i].y)
                             plt.scatter(points[a].x, points[a].y)
                         
-                        for b in range(len(result)):
-                            plt.plot([result[b][0].x, result[b][1].x], [result[b][0].y, result[b][1].y])
+                        b = 0
+                        while b < (len(result) - 1):
+                            plt.plot([result[b].x, result[b + 1].x], 
+                                     [result[b].y, result[b + 1].y])
+                            b += 2
                         
-                        plt.plot([points[i].x, points[j].x], [points[i].y, points[j].y])
-                        plt.plot([points[j].x, points[k].x], [points[j].y, points[k].y])
+                        plt.plot([points[i].x, points[j].x], 
+                                [points[i].y, points[j].y])
+                        plt.plot([points[j].x, points[k].x], 
+                                [points[j].y, points[k].y])
 
                         plt.show(block=False)
                         plt.pause(0.00000001)
+                        ###############
 
                         if orientation(points[i], points[k], points[j]) >= 0:
-                            keepGoing = False
+                            keepGoing = False #if the points make a CCW turn, move on
                     k += 1
-                if keepGoing:
-                    result.append([points[i], points[j]])
+                if keepGoing: 
+                #if every point is checked and the points never make a CCW turn, they must be on the hull
+                    result.append(points[i])
+                    result.append(points[j])
 
+    ############
     plt.clf()
 
     for c in range(len(points)):
         plt.scatter(points[c].x, points[c].y)    
 
-    for d in range(len(result)):
-        plt.plot([result[d][0].x, result[d][1].x], [result[d][0].y, result[d][1].y])
+    d = 0
+    while d < len(result) - 1:
+        plt.plot([result[d].x, result[d + 1].x], [result[d].y, result[d + 1].y])
+        d += 2
 
     plt.show()
-                
-    return result
+    ############
