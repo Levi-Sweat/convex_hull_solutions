@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import random
 from functools import cmp_to_key
-import time
 
 #$ -> done
 
@@ -15,7 +14,6 @@ import time
 #next step -> implementing an nlogn divide & conquer algorithm to sort the list,
 #            then implement the graham scan algorithm to find the convex hull
 # DELETE REMOTE, MAKE A NEW REMOTE WITH NEW GIT REPO
-
 
 class Point:
     def __init__(self, x, y):
@@ -52,8 +50,6 @@ def orientation(p1, p2, p3):
         -  (p2.y - p1.y) * (p3.x - p1.x)
 
 
-
-#for output sensitive version -> whichever point returns the smallest polar_angle, on the convex hull, then go to that point
 def polar_angle(p0, p1 = None):
     if p1 == None: p1 = anchor
     y_span = p0.y - p1.y
@@ -78,7 +74,6 @@ def polarsort(list):
         if pt_ang < piv_ang: smaller.append(pt)
         elif pt_ang == piv_ang: equal.append(pt)
         else: larger.append(pt)
-
     return polarsort(smaller) + sorted(equal, key = distance) + polarsort(larger)
 
 def graham_scan(points):
@@ -88,11 +83,22 @@ def graham_scan(points):
     
     anchor = points[0]
 
+    print("After sorting by y value:")
+
+    for i in range(len(points)):
+        print(points[i])
+
     points = polarsort(points)
+
+    print("After sorting by polar angle:")
+    
+    for i in range(len(points)):
+        print(points[i])
+
 
     hull = [anchor, points[1]]
     for s in points[2:]:
-        while orientation(hull[-2], hull[-1], s) <= 0:
+        while orientation(hull[-2], hull[-1], s) <= 0: #############CHANGE ORIENTATION TO BE LIKE DET IN EXAMPLE
             del hull[-1] #backtrack
             if len(hull) < 2: break
         hull.append(s)
@@ -102,6 +108,11 @@ def graham_scan(points):
         print(hull[i])
 
     return hull
+
+
+
+
+
 
 def merge_sort(array):
     # If the input array contains fewer than two elements,
@@ -167,29 +178,16 @@ def brute_force(points):
                 k = 0
                 keepGoing = True
                 while k < len(points) and keepGoing:
-
-                    plt.clf()                    
-                    for i in range(len(points)):
-                        plt.scatter(points[i].x, points[i].y)
-                    if len(result) >= 0:
-                        for z in range(len(result)):
-                            plt.plot([result[z][0].x, result[z][1].x], [result[z][0].y, result[z][1].y])
-                        # plt.plot([points[i].x, points[j].x], [points[i].y, points[j].y])
-                        # plt.plot([points[j].x, points[k].x], [points[j].y, points[k].y])
-                    
-
-                    plt.show(block=False)
-                    plt.pause(0.00000001)
-
-
-                    if k != i and k != j:
-                        if orientation(points[i], points[k], points[j]) >= 0:
+                    if k != i and k != j: #issue with: ijk & ikj
+                        if orientation(points[i], points[k], points[j]) >= 0: #maybe k should be in the middle and j should be on the end
                             keepGoing = False
                     k += 1
                 if keepGoing:
                     result.append([points[i], points[j]])
 
+                
     return result
+
 
 def output_sensitive(points):
     leftmost = points[0]
@@ -220,7 +218,6 @@ def output_sensitive(points):
             nextVertex = leftmost
 
     return hull
-        
 
 plt.style.use('_mpl-gallery')
 
@@ -233,16 +230,13 @@ fig, ax = plt.subplots()  # Create a figure containing a single axes.
 print("How many random points would you like to plot?")
 numPoints = int(input())
 
-
 points = []
 
 for i in range(numPoints):
     x = random.randint(0, 100)
     y = random.randint(0, 100)
     points.append(Point(x, y))
-    # plt.show(block=False)
-    # plt.pause(0.1)
-    #ax.scatter(x, y)
+    ax.scatter(x, y)
 
 for i in range(len(points)):
     print(points[i])
@@ -251,18 +245,12 @@ p0 = points[0] #first point, used in calculating the orientation for the graham 
 
 # points = graham_scan(points)
 
-#points = output_sensitive(points)
-
 brute_force_points = brute_force(points)
-for i in range(len(points)):
-    plt.scatter(points[i].x, points[i].y)
-for j in range(len(brute_force_points)):
-    plt.plot([brute_force_points[j][0].x, brute_force_points[j][1].x], [brute_force_points[j][0].y, brute_force_points[j][1].y])
+for i in range(len(brute_force_points)):
+    ax.plot([brute_force_points[i][0].x, brute_force_points[i][1].x], [brute_force_points[i][0].y, brute_force_points[i][1].y])
 
 
-#plt.plot([brute_force_points[-1][1].x, brute_force_points[0][0].x], [brute_force_points[-1][1].y, brute_force_points[0][0].y])
-
-
+#ax.plot([brute_force_points[-1][1].x, brute_force_points[0][0].x], [brute_force_points[-1][1].y, brute_force_points[0][0].y])
 
 
 # i = 0
@@ -271,5 +259,8 @@ for j in range(len(brute_force_points)):
 #     i += 1
 
 # ax.plot([points[-1].x, points[0].x], [points[-1].y, points[0].y])
+
+
+
 
 plt.show() # Display the figure.
